@@ -18,7 +18,42 @@ let Person = mongoose.model('Person', personSchema);
 app.use(bodyParser.urlencoded({extended:false}));
 
 app.get('/', function (req, res) {
-	res.send("hi");
+	res.send("hello from server");
+})
+
+app.delete('/person/:personId', function (req, res) {
+
+	let personId = req.params.personId;
+
+	Person.findOneAndDelete({_id: personId}, function (err, deleted) {
+
+		if(err) {
+			
+			res.status(400).json({
+				success: false,
+				message: `invalid id ${personId} in url`
+			});
+			return;
+
+		} else {
+			
+			if(deleted === null) {
+				
+				res.status(200).json({
+					success: true,
+					message: `no such object with id ${personId} exists`
+				});
+			} else {
+
+				res.status(200).json({
+					success: true,
+					message: `person with id ${personId} deleted`
+				});
+			}
+			
+			return;
+		}
+	});
 })
 
 app.put('/person/:personId', function (req, res) {
