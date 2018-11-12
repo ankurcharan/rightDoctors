@@ -21,6 +21,30 @@ app.get('/', function (req, res) {
 	res.send("hi");
 })
 
+app.get('/person', function (req, res) {
+
+	console.log('hello');
+
+	Person.find({}, function (err, persons) {
+		if(err) {
+
+			res.status(500).json({
+				success: false,
+				message: 'could not fetch persons'
+			});
+		}
+		else {
+			res.status(200).json({
+				success: true,
+				message: 'persons received',
+				data: {
+					persons
+				}
+			})
+		}
+	})
+
+})
 
 app.post('/person', function (req, res) {
 
