@@ -41,7 +41,9 @@ app.put('/person/:personId', function (req, res) {
 			let gender = req.body.gender;
 			let contact = Number(req.body.contact);
 
-			if(name === undefined || age === undefined || gender === undefined || contact === undefined) {
+			console.log(contact);
+
+			if(name === undefined || age === undefined || gender === undefined || contact === NaN || age === NaN) {
 
 				res.status(400).json({
 					success: false,
@@ -108,7 +110,7 @@ app.post('/person', function (req, res) {
 	let gender = req.body.gender;
 	let contact = Number(req.body.contact);
 
-	if(name === undefined || age === undefined || gender === undefined || contact === undefined) {
+	if(name === undefined || age === undefined || gender === undefined || contact === NaN || age === NaN) {
 
 		res.status(400).json({
 			success: false,
