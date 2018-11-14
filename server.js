@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const opn = require('opn');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
@@ -17,9 +18,7 @@ let Person = mongoose.model('Person', personSchema);
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/', function (req, res) {
-	res.send("hello from server");
-})
+app.use(cors({origin:true}));
 
 app.delete('/person/:personId', function (req, res) {
 
@@ -174,6 +173,14 @@ app.post('/person', function (req, res) {
 			});
 		}
 	})	
+})
+
+app.use(function (req, res) {
+
+	res.status(200).json({
+		success: false,
+		message: 'wrong route, use valid routes'
+	})
 })
 
 app.listen(5000, function () {
